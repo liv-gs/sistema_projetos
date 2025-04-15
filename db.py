@@ -120,17 +120,12 @@ def atualizar_tarefa_no_banco(id, nome, descricao, data_inicio, data_fim):
     conn.close()
 
 def excluir_tarefa(id):
-    # Conectando ao banco de dados
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-
-    # Executando a exclusão da tarefa com o id especificado
     cursor.execute('''
         DELETE FROM tarefas WHERE id = ?
     ''', (id,))
-
-    # Confirmando a exclusão e fechando a conexão
     conn.commit()
     conn.close()
 
