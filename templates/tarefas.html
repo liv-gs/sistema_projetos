@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Atividades - {{ projeto['nome'] }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body style="background-color: rgba(195, 185, 185, 0.991);">
+
+<div class="container mt-5">
+    <a href="{{ url_for('projeto_route.listar_projetos') }}" class="btn btn-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Voltar para Projetos
+    </a>
+
+    <h2 class="mb-4">Atividades do Projeto: {{ projeto['nome'] }}</h2>
+
+    <!-- Formulário para criar ou editar uma tarefa -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">
+            {% if tarefa %}
+                Editar Tarefa
+            {% else %}
+                Criar Nova Tarefa
+            {% endif %}
+        </h5>
+        <form method="POST" action="{% if tarefa %}{{ url_for('tarefa_route.atualizar_tarefa', id=tarefa['id']) }}{% else %}{{ url_for('tarefa_route.salvar_tarefa_route', projeto_id=projeto['id']) }}{% endif %}">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome da Tarefa</label>
+                <input type="text" class="form-control" id="nome" name="nome" required value="{{ tarefa['nome'] if tarefa else '' }}">
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ tarefa['descricao'] if tarefa else '' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="data_inicio" class="form-label">Data de Início</label>
+                <input type="date" class="form-control" id="data_inicio" name="data_inicio" required value="{{ tarefa['data_inicio'] if tarefa else '' }}">
+            </div>
+            <div class="mb-3">
+                <label for="data_fim" class="form-label">Data de Término</label>
+                <input type="date" class="form-control" id="data_fim" name="data_fim" required value="{{ tarefa['data_fim'] if tarefa else '' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">
+                {% if tarefa %}Salvar Alterações{% else %}Adicionar Tarefa{% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+    <h4>Tarefas do Projeto</h4>
+    <ul class="list-group">
+        {% for tarefa in tarefas %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ tarefa['nome'] }}</strong> - {{ tarefa['descricao'] }} <br>
+                    <small>Início: {{ tarefa['data_inicio'] }} | Término: {{ tarefa['data_fim'] }}</small>
+                </div>
+                <div>
+                    <span class="badge bg-{{ 'success' if tarefa['concluida'] else 'warning' }}">
+                        {{ 'Concluída' if tarefa['concluida'] else 'Em andamento' }}
+                    </span>
+                    <!-- Botões para editar e excluir -->
+                    <a  href="{{ url_for('tarefa_route.editar_tarefa', id=tarefa['id']) }}" class="btn btn-outline-primary btn-sm ms-2">Editar</a>
+                    
+                    <form  action="{{ url_for('tarefa_route.excluir_tarefa_route', id=tarefa['id']) }}" method="POST" class="d-inline ms-2" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?')">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
