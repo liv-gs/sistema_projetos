@@ -81,7 +81,7 @@ def buscar_tarefas_por_projeto(projeto_id):
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute('''SELECT id, nome, descricao, data_inicio, data_fim, status FROM tarefas WHERE projeto_id = ?''', (projeto_id,))
+    cursor.execute('''SELECT id, nome, descricao, data_inicio, data_fim FROM tarefas WHERE projeto_id = ?''', (projeto_id,))
     tarefas = cursor.fetchall()
     conn.close()
     return tarefas
@@ -108,7 +108,7 @@ def buscar_tarefa_por_id(id):
     conn.close()
     return tarefa
 
-def atualizar_tarefa_no_banco(id, nome, descricao, data_inicio, data_fim):
+def exc_atualizar_tarefa(id, nome, descricao, data_inicio, data_fim):
     conn = sqlite3.connect('banco.db')
     cursor = conn.cursor()
     cursor.execute('''
@@ -119,7 +119,7 @@ def atualizar_tarefa_no_banco(id, nome, descricao, data_inicio, data_fim):
     conn.commit()
     conn.close()
 
-def excluir_tarefa(id):
+def excluir_tarefa(id):         
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()

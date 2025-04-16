@@ -8,5 +8,5 @@ def inicial():
         return redirect(url_for('login_route.login'))
 
     nome = session.get('nome')
-    perfil = session.get('perfil')
+    perfil = session.get('perfil')  
     return render_template('inicial.html', nome=nome, perfil=perfil)

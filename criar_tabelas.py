@@ -46,7 +46,6 @@ def criar_tabela_tarefas():
             descricao TEXT,
             data_inicio DATE,
             data_fim DATE,
-            status TEXT DEFAULT 'pendente',
             FOREIGN KEY (projeto_id) REFERENCES projetos(id)
         )
     ''')
