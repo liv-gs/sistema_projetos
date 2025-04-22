@@ -29,7 +29,7 @@
                     <a href="{{ url_for('projeto_route.listar_projetos') }}" class="btn-close" aria-label="Fechar"></a>
                 </div>
 
-                <!-- Formulário de Criação/Edição -->
+               
                 <form 
                     action="{{ url_for('projeto_route.editar_projeto', id=projeto_editar['id']) if projeto_editar else url_for('projeto_route.listar_projetos') }}" 
                     method="POST"
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <!-- Lista de Projetos -->
+       
         <div class="row">
             {% for projeto in projetos %}
                 <div class="col-md-4 mb-4">

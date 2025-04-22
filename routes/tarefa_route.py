@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from db import buscar_projeto_por_id, buscar_tarefas_por_projeto, salvar_tarefa, buscar_tarefa_por_id, excluir_tarefa, exc_atualizar_tarefa
 
-# Aqui você define o blueprint
+
 tarefa_route = Blueprint('tarefa_route', __name__)
 projeto_route = Blueprint('projeto_route', __name__)
 
@@ -19,9 +19,9 @@ def salvar_tarefa_route(projeto_id):
     data_inicio = request.form['data_inicio']
     data_fim = request.form['data_fim']
 
-    
     salvar_tarefa(nome, descricao, data_inicio, data_fim, projeto_id)
     return redirect(url_for('tarefa_route.tarefas_do_projeto', projeto_id=projeto_id))
+
 
 @tarefa_route.route('/tarefa/<int:id>/atualizar', methods=['POST'])
 def atualizar_tarefa(id):
@@ -30,7 +30,7 @@ def atualizar_tarefa(id):
     data_inicio = request.form['data_inicio']
     data_fim = request.form['data_fim']
     
-    projeto_id = request.form.get('projeto_id')  # Usando get para evitar KeyError
+    projeto_id = request.form.get('projeto_id')  
     if not projeto_id:
         return "Erro: projeto_id não foi enviado", 400
     
@@ -49,16 +49,12 @@ def editar_tarefa(id):
         data_fim = request.form['data_fim']
         projeto_id = request.form['projeto_id']  
 
-   
         exc_atualizar_tarefa(id, nome, descricao, data_inicio, data_fim)
-        
-  
         return redirect(url_for('tarefa_route.tarefas_do_projeto', projeto_id=projeto_id))
 
 
     projeto = buscar_projeto_por_id(tarefa['projeto_id'])
     tarefas = buscar_tarefas_por_projeto(tarefa['projeto_id'])
-
     return render_template('tarefas.html', tarefa=tarefa, projeto=projeto, tarefas=tarefas)
 
 

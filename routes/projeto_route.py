@@ -21,10 +21,12 @@ def listar_projetos():
     return render_template('projeto.html', projetos=projetos)  
 
 
+
 @projeto_route.route('/projeto/excluir/<int:id>', methods=['POST'])
 def excluir_projeto_route(id):
     excluir_projeto(id)  
     return redirect(url_for('projeto_route.listar_projetos'))  
+
 
 
 @projeto_route.route('/projeto/editar/<int:id>', methods=['GET', 'POST'])
