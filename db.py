@@ -2,6 +2,7 @@ import sqlite3
 import bcrypt
 
 
+
 # Função para salvar o usuário
 def inserir_usuario(nome, email, senha, perfil):
     senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
@@ -81,23 +82,21 @@ def buscar_tarefas_por_projeto(projeto_id):
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute('''SELECT id, nome, descricao, data_inicio, data_fim FROM tarefas WHERE projeto_id = ?''', (projeto_id,))
+    cursor.execute('''SELECT id, nome, descricao, data_inicio, data_fim, arquivo_nome, arquivo_caminho FROM tarefas WHERE projeto_id = ?''', (projeto_id,))
     tarefas = cursor.fetchall()
     conn.close()
     return tarefas
 
 
-def salvar_tarefa(nome, descricao, data_inicio, data_fim, projeto_id):
+def salvar_tarefa(nome, descricao, data_inicio, data_fim, projeto_id, arquivo_nome=None, arquivo_caminho=None):
     conn = sqlite3.connect('banco.db')
-    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute('''
-        INSERT INTO tarefas (nome, descricao, data_inicio, data_fim, projeto_id)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (nome, descricao, data_inicio, data_fim, projeto_id))
+        INSERT INTO tarefas (nome, descricao, data_inicio, data_fim, projeto_id, arquivo_nome, arquivo_caminho)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (nome, descricao, data_inicio, data_fim, projeto_id, arquivo_nome, arquivo_caminho))
     conn.commit()
     conn.close()
-
 
 def buscar_tarefa_por_id(id):
     conn = sqlite3.connect('banco.db')
@@ -107,17 +106,14 @@ def buscar_tarefa_por_id(id):
     tarefa = cursor.fetchone()
     conn.close()
     return tarefa
-
-def exc_atualizar_tarefa(id, nome, descricao, data_inicio, data_fim):
-    conn = sqlite3.connect('banco.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        UPDATE tarefas
-        SET nome = ?, descricao = ?, data_inicio = ?, data_fim = ?
-        WHERE id = ?
-    ''', (nome, descricao, data_inicio, data_fim, id))
+    
+def exc_atualizar_tarefa(id, nome, descricao, data_inicio, data_fim, arquivo_nome=None, arquivo_caminho=None):
+    conn = get_db_connection()
+    conn.execute('UPDATE tarefas SET nome = ?, descricao = ?, data_inicio = ?, data_fim = ?, arquivo_nome = ?, arquivo_caminho = ? WHERE id = ?',
+                 (nome, descricao, data_inicio, data_fim, arquivo_nome, arquivo_caminho, id))
     conn.commit()
     conn.close()
+
 
 def excluir_tarefa(id):         
     conn = sqlite3.connect('banco.db')
@@ -128,4 +124,10 @@ def excluir_tarefa(id):
     ''', (id,))
     conn.commit()
     conn.close()
+
+
+def get_db_connection(): #arquivo
+    conn = sqlite3.connect('banco.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 

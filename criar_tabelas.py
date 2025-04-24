@@ -46,6 +46,8 @@ def criar_tabela_tarefas():
             descricao TEXT,
             data_inicio DATE,
             data_fim DATE,
+            arquivo TEXT,
+            caminho TEXT,
             FOREIGN KEY (projeto_id) REFERENCES projetos(id)
         )
     ''')
