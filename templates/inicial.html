@@ -5,17 +5,17 @@
     <title>Página Inicial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 
-<nav class="navbar bg-dark navbar-dark">
+<nav class="menu navbar bg-dark navbar-dark">
     <div class="container-fluid">
         <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
             ☰ Menu
         </button>
     </div>
 </nav>
-
 <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="menuLateral">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
@@ -27,11 +27,16 @@
                 <a class="nav-link text-white" href="{{ url_for('projeto_route.listar_projetos') }}">🗂️ Projetos</a>
             </li>
         </ul>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="{{ url_for('execucao_route.listar_execucoes') }}">🗂️ Execuções</a>
+            </li>
+        </ul>
     </div>
 </div>
 
-<div class="container mt-4">
-    <h1>Bem-vindo à Página Inicial</h1>
+<div class="flex-grow-1 d-flex justify-content-center align-items-center">
+    <h1 class="text-center">Bem-vindo à Página Inicial</h1>
 </div>
 
 </body>

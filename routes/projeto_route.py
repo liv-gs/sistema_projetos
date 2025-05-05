@@ -17,8 +17,8 @@ def listar_projetos():
         salvar_projeto(nome, descricao, data_inicio, data_fim, responsavel, equipe)
         return redirect(url_for('projeto_route.listar_projetos'))  
 
-    projetos = buscar_projeto()  # Busca os projetos do banco
-    return render_template('projeto.html', projetos=projetos)  
+    projeto = buscar_projeto() 
+    return render_template('projeto.html', projetos=projeto)  
 
 
 
@@ -44,5 +44,4 @@ def editar_projeto(id):
 
     projeto = buscar_projeto_por_id(id)  
     return render_template('projeto.html', projeto_editar=projeto, projetos=buscar_projeto())  
-
 

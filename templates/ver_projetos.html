@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Projetos da Execução</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container mt-5">
+    <a href="{{ url_for('execucao_route.listar_execucoes') }}" class="btn btn-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Voltar para Execuções
+    </a>
+
+    <h2 class="mb-4">Projetos da Execução #{{ execucao_id }}</h2>
+
+    {% if projetos %}
+        <div class="row">
+            {% for projeto in projetos %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ projeto['nome'] }}</h5>
+                            <p class="card-text">{{ projeto['descricao'] }}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Nenhum projeto encontrado para esta execução.
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

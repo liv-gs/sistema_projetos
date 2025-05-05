@@ -1,9 +1,8 @@
 import sqlite3
 import bcrypt
 
+#FUNÇÃO USUÁRIO
 
-
-# Função para salvar o usuário
 def inserir_usuario(nome, email, senha, perfil):
     senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
     conn = sqlite3.connect('banco.db')
@@ -29,7 +28,13 @@ def buscar_usuario_por_email(email):
     return usuario
 
 
-# Função para salvar o projeto
+
+
+
+
+
+#FUNÇÃO PROJETO
+
 def salvar_projeto(nome, descricao, data_inicio, data_fim, responsavel, equipe):
     conn = sqlite3.connect('banco.db')
     cursor = conn.cursor()
@@ -76,7 +81,12 @@ def atualizar_projeto(id, nome, descricao, data_inicio, data_fim, responsavel, e
     conn.commit()
     conn.close()
 
-#função tarefa
+
+
+
+
+
+#FUNÇÃO TAREFA
 
 def buscar_tarefas_por_projeto(projeto_id):
     conn = sqlite3.connect('banco.db')
@@ -86,7 +96,6 @@ def buscar_tarefas_por_projeto(projeto_id):
     tarefas = cursor.fetchall()
     conn.close()
     return tarefas
-
 
 def salvar_tarefa(nome, descricao, data_inicio, data_fim, projeto_id, arquivo_nome=None, arquivo_caminho=None):
     conn = sqlite3.connect('banco.db')
@@ -114,7 +123,6 @@ def exc_atualizar_tarefa(id, nome, descricao, data_inicio, data_fim, arquivo_nom
     conn.commit()
     conn.close()
 
-
 def excluir_tarefa(id):         
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
@@ -125,9 +133,59 @@ def excluir_tarefa(id):
     conn.commit()
     conn.close()
 
-
-def get_db_connection(): #arquivo
+def get_db_connection(): 
     conn = sqlite3.connect('banco.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+
+ #FUNÇÃO EXECUÇÕES
+
+def buscar_execucoes():
+    conn = sqlite3.connect('banco.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('SELECT id, nome, descricao, data_inicio, data_fim FROM execucoes')
+    execucoes = cursor.fetchall()  
+    conn.close()
+    return execucoes  
+
+
+def salvar_execucao(nome, descricao, data_inicio, data_fim):
+    conn = sqlite3.connect('banco.db')
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO execucoes (nome, descricao, data_inicio, data_fim) 
+        VALUES (?, ?, ?, ?)
+    """, (nome, descricao, data_inicio, data_fim))
+
+    conn.commit()  
+    conn.close()    
+
+def adicionar_projeto_a_execucao(execucao_id, projeto_id):
+    conn = sqlite3.connect('banco.db')
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO execucoes_projetos (execucao_id, projeto_id) 
+        VALUES (?, ?)
+    """, (execucao_id, projeto_id))
+    conn.commit()
+    conn.close()
+
+
+def buscar_projetos_por_execucao(execucao_id):
+    conn = sqlite3.connect('banco.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT p.id, p.nome, p.descricao
+        FROM projetos p
+        JOIN execucoes_projetos ep ON p.id = ep.projeto_id
+        WHERE ep.execucao_id = ?
+    """, (execucao_id,))
+    projetos = cursor.fetchall()
+    conn.close()
+    return projetos
+
+
 

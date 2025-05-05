@@ -21,6 +21,7 @@ def tarefas_do_projeto(projeto_id):
     tarefas = buscar_tarefas_por_projeto(projeto_id)
     return render_template('tarefas.html', projeto=projeto, tarefas=tarefas)
 
+
 @tarefa_route.route('/projeto/<int:projeto_id>/tarefas/criar', methods=['POST'])
 def salvar_tarefa_route(projeto_id):
     nome = request.form['nome']
