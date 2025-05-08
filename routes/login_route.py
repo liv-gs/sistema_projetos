@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from db import buscar_usuario_por_email
-import bcrypt
+from db import buscar_usuario_por_email,conectar
 
 login_route = Blueprint('login_route', __name__)
 
@@ -10,13 +9,16 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
-        usuario = buscar_usuario_por_email(email)
+        
+        conn = conectar() 
+        usuario = buscar_usuario_por_email(conn, email)
 
-        if usuario and bcrypt.checkpw(senha.encode('utf-8'), usuario[3].encode('utf-8')):
-            session['usuario_id'] = usuario[0]
-            session['nome'] = usuario[1]
-            session['perfil'] = usuario[4]
+        if usuario and senha == usuario['senha']:
+            session['usuario_id'] = usuario['id']
+            session['nome'] = usuario['nome']
+            session['perfil'] = usuario['perfil']
             return redirect(url_for('inicial_route.inicial'))
         else:
             mensagem = "Email ou senha incorretos."
+
     return render_template('login.html', mensagem=mensagem)

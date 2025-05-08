@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, abort,
 from werkzeug.utils import secure_filename
 import os
 from db import buscar_projeto_por_id, buscar_tarefas_por_projeto, salvar_tarefa, buscar_tarefa_por_id, excluir_tarefa, exc_atualizar_tarefa
-from db import get_db_connection
+
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'docx'}

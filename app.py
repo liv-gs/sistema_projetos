@@ -6,9 +6,9 @@ from routes import cadastro_route, login_route, inicial_route, projeto_route, ta
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta'  
 
+
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 
 
 # Registra as rotas
