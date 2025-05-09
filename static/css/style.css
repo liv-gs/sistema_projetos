@@ -61,9 +61,19 @@ h1{
 
 
 
-   /*TAREFAS*/
+   /*cadastro e login*/
 
 
+   .card-a{
+      box-shadow: 0px 0px 55px 10px rgba(0, 0, 0, 0.593);
+      border-radius: 30px;
+      background-color: #2f2d2d;
+
+     }
    
+    .body-a{
+        background-color: #a37272;
+    }
+
 
 

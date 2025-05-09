@@ -1,68 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-     .card{
-      box-shadow: 0px 0px 55px 10px rgba(0, 0, 0, 0.593);
-      border-radius: 30px;
-      background-color: #2f2d2d;
-     }
-     
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <section class="vh-100" style="background-color: #a37272;">
-        <div class="container h-100">
-          <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="col-8 col-md-6 col-lg-5 col-xl-4">
-              <div class="card" >
-                <div class="card-body p-4 p-lg-5 text-black">
-                    
-                    <p style="color: rgb(252, 252, 252);">{{ mensagem }}</p>
+<body class="bg-[#a37272] min-h-screen flex items-center justify-center">
 
-                    <h1 style="color: aliceblue; padding-bottom: 10px;" > cadastre-se </h1>
-      
-                  <form method="post" > 
-                        <div class="mb-3">
-                        <input type="text" name="nome" class="form-control form-control-sm rounded-3" placeholder="Nome" />
-                    </div>
-                        <div class="mb-3">
-                        <input type="email" name="email" class="form-control form-control-sm rounded-3" placeholder="Email" />
-                    </div>
-        
-                    <div class="mb-3">
-                        <input type="password" name="senha" class="form-control form-control-sm rounded-3" placeholder="Senha" />
-                    </div>
+  <section class="w-full max-w-md p-6 bg-gray-900 rounded-3xl shadow-[0_4px_15px_#1a1a1a] ...">
+    <div class="text-center mb-6">
+      <p class="text-red-400 text-sm">{{ mensagem }}</p>
+      <h1 class="text-3xl font-bold text-white">Cadastre-se</h1>
+    </div>
 
-                    <div class="mb-3">
-                      <label for="perfil" class="form-label">Perfil</label>
-                      <select class="form-select" id="perfil" name="perfil" required>
-                        <option value="admin">Admin</option>
-                        <option value="gestor">Gestor</option>
-                        <option value="colaborador">Colaborador</option>
-                      </select>
-                    </div>
-                    
-
-                    <div class="d-grid mb-3">
-                      <button class="btn btn-sm rounded-3" type="submit" style="background-color: #a37272; border-color:#a37272; color: white;">
-                          Cadastrar
-                      </button>
-                  </div>
-                  
-                 </form>
-                <p><a style="color:#a37272;" href="/login">Já tem uma conta? Login </a></p>   
-
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="p-4">
+      <form method="post">
+        <div class="relative mb-6">
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder=" "
+            required
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+          />
+          <label
+            for="nome"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+          >
+            Nome
+          </label>
         </div>
-    </section>
+
+        <div class="relative mb-6">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder=" "
+            required
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+          />
+          <label
+            for="email"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+          >
+            E-mail
+          </label>
+        </div>
+
+        <div class="relative mb-6">
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder=" "
+            required
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+          />
+          <label
+            for="senha"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+          >
+            Senha
+          </label>
+        </div>
+        
+        <button
+          type="submit"
+          class="w-full bg-[#a37272] text-white font-semibold py-2 rounded hover:bg-[#8e5d5d] transition"
+        >
+          Cadastrar
+        </button>
+      </form>
+
+      <p class="text-sm text-center mt-4">
+        <a href="/login" class="text-[#a37272] hover:underline font-medium">Já tem uma conta? Login</a>
+      </p>
+    </div>
+
+  </section>
+
 </body>
 </html>
