@@ -7,9 +7,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="bg-[#a37272] min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center" style="background: linear-gradient(0deg, rgba(140, 163, 134, 1) 0%, rgba(72, 135, 84, 1) 100%); background-repeat: no-repeat; background-size: cover;">
 
-  <section class="w-full max-w-md p-6 bg-gray-900 rounded-3xl shadow-[0_4px_15px_#1a1a1a] ...">
+  <section class="w-full max-w-md p-6 bg-gray-900 rounded-3xl shadow-[0_4px_15px_#1a1a1a]">
     <div class="text-center mb-6">
       <p class="text-red-400 text-sm">{{ mensagem }}</p>
       <h1 class="text-3xl font-bold text-white">Cadastre-se</h1>
@@ -24,11 +24,13 @@
             name="nome"
             placeholder=" "
             required
-            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent px-4 pt-6 pb-3 text-white focus:border-[#e4dcdc] focus:outline-none"
           />
           <label
             for="nome"
-            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all 
+              peer-placeholder-shown:top-4 peer-placeholder-shown:text-base 
+              peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#e4dcdc]"
           >
             Nome
           </label>
@@ -41,11 +43,13 @@
             name="email"
             placeholder=" "
             required
-            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent px-4 pt-6 pb-3 text-white focus:border-[#e4dcdc] focus:outline-none"
           />
           <label
             for="email"
-            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all 
+              peer-placeholder-shown:top-4 peer-placeholder-shown:text-base 
+              peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#e4dcdc]"
           >
             E-mail
           </label>
@@ -58,11 +62,13 @@
             name="senha"
             placeholder=" "
             required
-            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent px-4 pt-6 pb-3 text-white focus:border-[#e4dcdc] focus:outline-none"
           />
           <label
             for="senha"
-            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all 
+              peer-placeholder-shown:top-4 peer-placeholder-shown:text-base 
+              peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#e4dcdc]"
           >
             Senha
           </label>
@@ -70,17 +76,16 @@
         
         <button
           type="submit"
-          class="w-full bg-[#a37272] text-white font-semibold py-2 rounded hover:bg-[#8e5d5d] transition"
+          class="w-full bg-[#8CA386] text-white font-semibold py-2 rounded hover:bg-[#488754] transition"
         >
           Cadastrar
         </button>
       </form>
 
       <p class="text-sm text-center mt-4">
-        <a href="/login" class="text-[#a37272] hover:underline font-medium">Já tem uma conta? Login</a>
+        <a href="/login" class="text-[#e4dcdc] hover:underline font-medium">Já tem uma conta? Login</a>
       </p>
     </div>
-
   </section>
 
 </body>

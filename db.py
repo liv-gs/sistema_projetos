@@ -41,13 +41,12 @@ def inserir_usuario(nome, email, senha, perfil):
 
 
 def buscar_usuario_por_email(conn, email):
-    conn = conectar()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT id, nome, email, senha, perfil FROM usuarios WHERE email = %s', (email,))
-    usuario = cursor.fetchone()
-    cursor.close()
-    return usuario
-
+    conn = conectar()  #fazer a conexão com o banco
+    cursor = conn.cursor(dictionary=True) #usado por causa do mariadb com o conector-mysql-python, para retornar dados mais claros
+    cursor.execute('SELECT id, nome, email, senha, perfil FROM usuarios WHERE email = %s', (email,)) #buscar no banco com o email informado
+    usuario = cursor.fetchone() #retornar do banco uma informação em linha
+    cursor.close() #fecha a conexão
+    return usuario #retorna 
 
 
 
@@ -55,7 +54,7 @@ def buscar_usuario_por_email(conn, email):
 
 def salvar_projeto(nome, descricao, data_inicio, data_fim, responsavel, equipe):
     conn = conectar()
-    cursor = conn.cursor()
+    cursor = conn.cursor() #chama o metodo
     cursor.execute('''
         INSERT INTO projetos (nome, descricao, data_inicio, data_fim, responsavel, equipe)
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -194,6 +193,11 @@ def buscar_projetos_por_execucao(execucao_id):
         JOIN execucoes_projetos ep ON p.id = ep.projeto_id
         WHERE ep.execucao_id = %s
     """, (execucao_id,))
-    projetos = cursor.fetchall()
+    projetos = cursor.fetchall()#esera varias linhas de resultado
     conn.close()
     return projetos
+
+
+
+
+

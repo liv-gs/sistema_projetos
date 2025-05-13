@@ -5,67 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Dosis', sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-[#a37272] min-h-screen flex items-center justify-center">
-
+<body class="min-h-screen flex items-center justify-center" style="background: linear-gradient(0deg, rgba(140, 163, 134, 1) 0%, rgba(72, 135, 84, 1) 100%); background-repeat: no-repeat; background-size: cover;">
   <section class="w-full max-w-md p-6 bg-gray-900 rounded-3xl shadow-[0_4px_15px_#1a1a1a] ...">
     <div class="text-center mb-6">
       <p class="text-red-400 text-sm">{{ mensagem }}</p>
-      <h1 class="text-3xl font-bold text-white">Login</h1>
+      <h1 class="text-3xl text-white">Login</h1>
     </div>
 
     <div class="p-2">
       <form method="post">
 
-        <div class="relative mb-6">
+       <div class="relative mb-6">
           <input
             type="email"
             id="email"
             name="email"
             placeholder=" "
             required
-            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-4 pt-4 pb-3 focus:border-[#a37272] focus:outline-none"
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent px-4 pt-6 pb-3 text-white focus:outline-none"
           />
           <label
             for="email"
-            class="absolute left-2 top-1 text-[#a37272] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all 
+                  peer-placeholder-shown:top-1
+                  peer-placeholder-shown:text-base 
+                  peer-focus:top-1
+                  peer-focus:text-sm 
+                  peer-focus:text-[#e4dcdc]"
           >
             E-mail
           </label>
         </div>
-
-        <div class="relative mb-6">
+         <div class="relative mb-6">
           <input
             type="password"
             id="senha"
             name="senha"
             placeholder=" "
             required
-            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent text-[#a37272] px-2 pt-4 pb-1 focus:border-[#a37272] focus:outline-none"
+            class="peer w-full border-0 border-b-2 border-[#e4dcdc] bg-transparent px-4 pt-6 pb-3 text-white focus:outline-none"
           />
           <label
             for="senha"
-            class="absolute left-2 top-1 text-[#e4dcdc] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-[#a37272]"
+            class="absolute left-2 top-1 text-[#e4dcdc] transition-all 
+                  peer-placeholder-shown:top-1
+                  peer-placeholder-shown:text-base 
+                  peer-focus:top-1
+                  peer-focus:text-sm 
+                  peer-focus:text-[#e4dcdc]"
           >
             Senha
           </label>
         </div>
-        
+
         <button
           type="submit"
-          class="w-full bg-[#a37272] text-white font-semibold py-2 rounded hover:bg-[#8e5d5d] transition"
+          class="w-full bg-[#8CA386] text-white font-semibold py-2 rounded hover:bg-[##488754] transition"
         >
           Login
         </button>
       </form>
 
       <p class="text-sm text-center mt-4">
-        <a href="/cadastro" class="text-[#a37272]">Ainda não tem uma conta? Cadastrar</a>
+        <a href="/cadastro" class="text-[#e4dcdc]">Ainda não tem uma conta? Cadastrar</a>
       </p>
     </div>
 
   </section>
-
 </body>
 </html>
