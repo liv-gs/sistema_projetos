@@ -178,24 +178,26 @@ def adicionar_projeto_a_execucao(execucao_id, projeto_id):
     conn = conectar()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO execucoes_projetos (execucao_id, projeto_id) 
-        VALUES (%s, %s)
+        UPDATE projetos
+        SET execucao_id = %s
+        WHERE id = %s
     """, (execucao_id, projeto_id))
     conn.commit()
     conn.close()
+
 
 def buscar_projetos_por_execucao(execucao_id):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
-        SELECT p.id, p.nome, p.descricao
-        FROM projetos p
-        JOIN execucoes_projetos ep ON p.id = ep.projeto_id
-        WHERE ep.execucao_id = %s
+        SELECT id, nome, descricao
+        FROM projetos
+        WHERE execucao_id = %s
     """, (execucao_id,))
-    projetos = cursor.fetchall()#esera varias linhas de resultado
+    projetos = cursor.fetchall()
     conn.close()
     return projetos
+
 
 
 

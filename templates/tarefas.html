@@ -13,122 +13,129 @@
             card.classList.toggle('d-none');
         }
     </script>
+    <style>
+        body{
+            background: #5c635e;
+            background: radial-gradient(circle, rgb(158, 182, 165) 0%, rgb(46, 135, 62) 100%);
+        }
+    </style>
 </head>
 <body>
-
-<div class="container mt-5">
-    <div>
+    <div class="container-fluid px-3 px-md-5 py-4">
         <a href="{{ url_for('projeto_route.listar_projetos') }}" class="btn btn-secondary mb-4">
-            <i class="bi bi-arrow-left"></i> Voltar para Projetos
+            <i class="bi bi-arrow-left"></i> 
         </a>
-        <h2 class="mb-4">Atividades do Projeto: {{ projeto['nome'] }}</h2>
+        <div class="container mt-5">
+            <div>
+                
+                <h2 class="mb-4">Atividades do Projeto: {{ projeto['nome'] }}</h2>
 
-        {% if not tarefa %}
-            <button class="btn btn-success mb-3" onclick="toggleCardForm()">+ Nova Tarefa</button>
-        {% endif %}
+                {% if not tarefa %}
+                    <button class="btn btn-success mb-3" onclick="toggleCardForm()">+ Nova Tarefa</button>
+                {% endif %}
 
-        <div id="formCard" class="card mb-4 {{ 'd-none' if not tarefa else '' }}" style="max-width: 700px;">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">
-                        {% if tarefa %}
-                            Editar Tarefa
-                        {% else %}
-                            Nova Tarefa
-                        {% endif %}
-                    </h5>
-                    {% if not tarefa %}
-                        <button type="button" class="btn-close" aria-label="Fechar" onclick="toggleCardForm()"></button>
-                    {% endif %}
+                <div id="formCard" class="card mb-4 {{ 'd-none' if not tarefa else '' }}" style="max-width: 700px;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                {% if tarefa %}
+                                    Editar Tarefa
+                                {% else %}
+                                    Nova Tarefa
+                                {% endif %}
+                            </h5>
+                            {% if not tarefa %}
+                                <button type="button" class="btn-close" aria-label="Fechar" onclick="toggleCardForm()"></button>
+                            {% endif %}
+                        </div>
+                
+                        <form 
+                        method="POST"
+                        enctype="multipart/form-data"
+                        action="{% if tarefa %}{{ url_for('tarefa_route.atualizar_tarefa', id=tarefa['id']) }}{% else %}{{ url_for('tarefa_route.salvar_tarefa_route', projeto_id=projeto['id']) }}{% endif %}">
+                        
+                            {% if tarefa %}
+                            <input type="hidden" name="projeto_id" value="{{ tarefa['projeto_id'] }}">
+                            {% else %}
+                            <input type="hidden" name="projeto_id" value="{{ projeto['id'] }}">
+                            {% endif %}
+                
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome da Tarefa</label>
+                                <input type="text" class="form-control" id="nome" name="nome" required value="{{ tarefa['nome'] if tarefa else '' }}">
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ tarefa['descricao'] if tarefa else '' }}</textarea>
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="data_inicio" class="form-label">Data de Início</label>
+                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" required value="{{ tarefa['data_inicio'] if tarefa else '' }}">
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="data_fim" class="form-label">Data de Término</label>
+                                <input type="date" class="form-control" id="data_fim" name="data_fim" required value="{{ tarefa['data_fim'] if tarefa else '' }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="arquivo" class="form-label">Anexar arquivo</label>
+                                <input class="form-control" type="file" name="arquivo" id="arquivo">
+                            </div>
+                            
+
+                            <button type="submit" class="btn btn-primary">
+                                {% if tarefa %}Salvar Alterações{% else %}Adicionar Tarefa{% endif %}
+                            </button>
+
+                        </form>
+                    </div>
                 </div>
-        
-                <form 
-                method="POST"
-                enctype="multipart/form-data"
-                action="{% if tarefa %}{{ url_for('tarefa_route.atualizar_tarefa', id=tarefa['id']) }}{% else %}{{ url_for('tarefa_route.salvar_tarefa_route', projeto_id=projeto['id']) }}{% endif %}">
-                   
-                    {% if tarefa %}
-                    <input type="hidden" name="projeto_id" value="{{ tarefa['projeto_id'] }}">
-                    {% else %}
-                    <input type="hidden" name="projeto_id" value="{{ projeto['id'] }}">
-                    {% endif %}
-        
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Nome da Tarefa</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required value="{{ tarefa['nome'] if tarefa else '' }}">
-                    </div>
-        
-                    <div class="mb-3">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ tarefa['descricao'] if tarefa else '' }}</textarea>
-                    </div>
-        
-                    <div class="mb-3">
-                        <label for="data_inicio" class="form-label">Data de Início</label>
-                        <input type="date" class="form-control" id="data_inicio" name="data_inicio" required value="{{ tarefa['data_inicio'] if tarefa else '' }}">
-                    </div>
-        
-                    <div class="mb-3">
-                        <label for="data_fim" class="form-label">Data de Término</label>
-                        <input type="date" class="form-control" id="data_fim" name="data_fim" required value="{{ tarefa['data_fim'] if tarefa else '' }}">
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="arquivo" class="form-label">Anexar arquivo</label>
-                        <input class="form-control" type="file" name="arquivo" id="arquivo">
-                    </div>
-                    
-
-                    <button type="submit" class="btn btn-primary">
-                        {% if tarefa %}Salvar Alterações{% else %}Adicionar Tarefa{% endif %}
-                    </button>
-
-                </form>
+                <div style="max-width: 700px" >
+                    <h4>Tarefas do Projeto</h4>
+                    <ul class="list-group" >
+                        {% for tarefa in tarefas %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start flex-column" >
+                            <div class="w-100 d-flex justify-content-between">
+                                <div>
+                                    <strong>{{ tarefa['nome'] }}</strong> - {{ tarefa['descricao'] }}<br>
+                                    <small>Início: {{ tarefa['data_inicio'] }} | Término: {{ tarefa['data_fim'] }}</small>
+                                </div>
+            
+                            </div>
+                        
+                            <a class="btn btn-link mt-2 p-0" data-bs-toggle="collapse" href="#verMais{{ tarefa['id'] }}" role="button" aria-expanded="false" aria-controls="verMais{{ tarefa['id'] }}">
+                                Ver mais
+                            </a>
+                        
+                            <div class="collapse mt-2 w-100" id="verMais{{ tarefa['id'] }}">
+                                <div class="card card-body bg-dark text-white ">
+                                    {% if tarefa['arquivo_nome'] %}
+                                        <strong>Arquivo:</strong>
+                                        <a href="{{ url_for('static', filename='uploads/' + tarefa['arquivo_nome']) }}" target="_blank">
+                                            {{ tarefa['arquivo_nome'] }}
+                                        </a>
+                                    {% else %}
+                                    nenhum arquivo anexado
+                                    {% endif %}
+                                    
+                                </div>
+                                <div class="m-2">
+                                    <a href="{{ url_for('tarefa_route.editar_tarefa', id=tarefa['id']) }}" class="btn btn-outline-primary btn-sm ms-2">Editar</a>
+                                    <form action="{{ url_for('tarefa_route.excluir_tarefa_route', id=tarefa['id']) }}" method="POST" class="d-inline ms-2" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?')">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                    </form>
+                                </div>
+                            </div>               
+                        </li>              
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-
-        <div style="max-width: 700px" >
-            <h4>Tarefas do Projeto</h4>
-            <ul class="list-group" >
-                {% for tarefa in tarefas %}
-                <li class="list-group-item d-flex justify-content-between align-items-start flex-column" >
-                    <div class="w-100 d-flex justify-content-between">
-                        <div>
-                            <strong>{{ tarefa['nome'] }}</strong> - {{ tarefa['descricao'] }}<br>
-                            <small>Início: {{ tarefa['data_inicio'] }} | Término: {{ tarefa['data_fim'] }}</small>
-                        </div>
-    
-                    </div>
-                
-                    <a class="btn btn-link mt-2 p-0" data-bs-toggle="collapse" href="#verMais{{ tarefa['id'] }}" role="button" aria-expanded="false" aria-controls="verMais{{ tarefa['id'] }}">
-                        Ver mais
-                    </a>
-                
-                    <div class="collapse mt-2 w-100" id="verMais{{ tarefa['id'] }}">
-                        <div class="card card-body bg-dark text-white ">
-                            {% if tarefa['arquivo_nome'] %}
-                                <strong>Arquivo:</strong>
-                                <a href="{{ url_for('static', filename='uploads/' + tarefa['arquivo_nome']) }}" target="_blank">
-                                    {{ tarefa['arquivo_nome'] }}
-                                </a>
-                            {% else %}
-                               nenhum arquivo anexado
-                            {% endif %}
-                            
-                        </div>
-                        <div class="m-2">
-                            <a href="{{ url_for('tarefa_route.editar_tarefa', id=tarefa['id']) }}" class="btn btn-outline-primary btn-sm ms-2">Editar</a>
-                            <form action="{{ url_for('tarefa_route.excluir_tarefa_route', id=tarefa['id']) }}" method="POST" class="d-inline ms-2" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?')">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
-                            </form>
-                        </div>
-                    </div>               
-                </li>              
-                {% endfor %}
-            </ul>
-        </div>
     </div>
-</div>
-
 </body>
 </html>

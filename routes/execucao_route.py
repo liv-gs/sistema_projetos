@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from db import salvar_execucao, buscar_execucoes, buscar_projetos_por_execucao, buscar_projeto, adicionar_projeto_a_execucao
 from flask import flash
-import sqlite3
+
 
 
 execucao_route = Blueprint('execucao_route', __name__)
