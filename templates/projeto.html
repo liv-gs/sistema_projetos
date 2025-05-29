@@ -10,14 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
 <style>
-    body{
-        font-family: "Dosis";
-        font-weight:400;
-        background: #8ca386;
-        background: linear-gradient(0deg, rgba(140, 163, 134, 1) 0%, rgba(72, 135, 84, 1) 100%);
-        background-repeat: no-repeat;
-        min-height: 100vh;
-
+    
+    body {
+    font-family: "Dosis", sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    background: linear-gradient(0deg, rgba(140, 163, 134, 1) 0%, rgba(72, 135, 84, 1) 100%);
+    background-repeat: no-repeat;
     }
     .card{
         transition: transform 0.3 ease, box-shadow 0.3 ease;
@@ -26,6 +25,7 @@
         transform: scale(1.03);
         box-shadow:0 0 25px rgba(0, 0, 0, 0,2); 
      }
+     
 </style>
 </head>
 <body>
@@ -106,14 +106,27 @@
                             <p class="card-text" style="color: rgb(52, 143, 54);"><strong>Equipe:</strong> {{ projeto['equipe'] }}</p>
 
                             <div class="d-flex gap-2">
-                                <a href="{{ url_for('projeto_route.editar_projeto', id=projeto['id']) }}" class="btn btn-outline-primary btn-sm">Editar</a>
-                                <form action="{{ url_for('projeto_route.excluir_projeto_route', id=projeto['id']) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este projeto?')">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm"
+                                            {% if session['perfil'] not in ['admin', 'gestor'] %}
+                                                disabled title="Sem permissão"
+                                            {% endif %}
+                                        >Editar</button>
+                                
+                                <form action="{{ url_for('projeto_route.excluir_projeto_route', id=projeto['id']) }}" method="POST" 
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este projeto?')">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                                        {% if session['perfil'] not in ['admin', 'gestor'] %}
+                                            disabled title="Sem permissão"
+                                        {% endif %}
+                                    >Excluir</button>
                                 </form>
-                                <a  href="{{ url_for('tarefa_route.tarefas_do_projeto', projeto_id=projeto['id']) }}" class="btn btn-outline-success btn-sm">
+                                
+                                <a href="{{ url_for('tarefa_route.tarefas_do_projeto', projeto_id=projeto['id']) }}" class="btn btn-outline-success btn-sm">
                                     Tarefas
                                 </a>
                             </div>
+
+
                         </div>
                     </div>
                 </div>

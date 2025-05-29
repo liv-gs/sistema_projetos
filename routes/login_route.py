@@ -22,3 +22,11 @@ def login():
             mensagem = "Email ou senha incorretos."
 
     return render_template('login.html', mensagem=mensagem)
+
+
+@login_route.route('/logout')
+def logout():
+    session.clear()  # ou session.pop('usuario', None) dependendo da sua lógica
+    return redirect(url_for('login_route.login'))
+
+

@@ -53,24 +53,45 @@
         </button>
     </div>
 </nav>
-<div class="offcanvas offcanvas-start text-bg" tabindex="-1" id="menuLateral">
+<div class="offcanvas offcanvas-start text-bg" tabindex="" id="menuLateral">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
         <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas"></button>
     </div>
-    <div class="offcanvas-body">
+    <div class="offcanvas-body d-flex flex-column h-100">
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
                 <a class="nav-link text-dark" href="{{ url_for('projeto_route.listar_projetos') }}">🗂️ Projetos</a>
             </li>
-        </ul>
-        <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link text-dark" href="{{ url_for('execucao_route.listar_execucoes') }}">🗂️ Execuções</a>
+                <a class="nav-link text-dark 
+                {% if session['perfil'] not in ['admin', 'gestor'] %}disabled-link{% endif %}"
+                href="{% if session['perfil'] in ['admin', 'gestor'] %}{{ url_for('execucao_route.listar_execucoes') }}{% else %}#{% endif %}"
+                {% if session['perfil'] not in ['admin', 'gestor'] %} title="Sem permissão" onclick="return false;" {% endif %}>
+                    🗂️ Execuções
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-dark 
+                {% if session['perfil'] not in ['admin'] %}disabled-link{% endif %}"
+                href="{% if session['perfil'] in ['admin'] %}{{ url_for('cadastro.listar_cadastro') }}{% else %}#{% endif %}"
+                {% if session['perfil'] not in ['admin'] %} title="Sem permissão" onclick="return false;" {% endif %}>
+                    🗂️ Cadastro de Usuários
+                </a>
             </li>
         </ul>
-    </div>
+            <li class="nav-item mt-auto">
+                <a class="text-dark" href="{{ url_for('login_route.logout') }}"> Voltar ao login</a>
+            </li>
+
+            
+       </div>
+
+   
+
+    
 </div>
+
 
 <div class="flex-grow-1 d-flex justify-content-center align-items-center">
     <h1 class="text-center">Bem-vindo à Página Inicial</h1>
@@ -78,3 +99,4 @@
 
 </body>
 </html>
+ 

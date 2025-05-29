@@ -10,17 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
 <style>
-    body {
-    font-family: "Dosis", sans-serif;
-    font-weight: 400;
-    min-height: 100vh;
-    background: linear-gradient(0deg, rgba(140, 163, 134, 1) 0%, rgba(72, 135, 84, 1) 100%);
-    background-repeat: no-repeat;
-   
-}
-
-
-     
+  
 </style>
     
 </head>
@@ -92,13 +82,25 @@
                     <h5 class="card-title">{{ execucao['nome'] }}</h5>
                     <p class="card-text"><strong>Início:</strong> {{ execucao['data_inicio'] }}</p>
                     <p class="card-text"><strong>Término:</strong> {{ execucao['data_fim'] }}</p>
-                    
-                    <a href="{{ url_for('execucao_route.ver_projetos', execucao_id=execucao['id']) }}" class="btn btn-info mb-2">Ver Projetos</a>
-                    
-                  
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAdicionarProjeto" onclick="setExecucaoId({{ execucao['id'] }})">
+
+                   <div class="d-flex gap-2 flex-wrap">
+                      <a href="{{ url_for('execucao_route.ver_projetos', execucao_id=execucao['id']) }}" class="btn btn-primary">
+                        Ver Projetos
+                      </a>
+
+                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdicionarProjeto" onclick="setExecucaoId({{ execucao['id'] }})">
                         Adicionar Projeto
-                    </button>
+                      </button>
+
+                      <form action="{{ url_for('execucao_route.excluir_execucao_route', execucao_id=execucao['id']) }}" method="POST" class="m-0">
+                        <button type="submit" class="btn btn-primary">
+                          Excluir
+                        </button>
+                      </form>
+                  </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -145,8 +147,6 @@ function setExecucaoId(id) {
 </script>
 
     
-
-
 
 </body>
 </html>

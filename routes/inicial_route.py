@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, url_for
+from db import inserir_usuario
 
 inicial_route = Blueprint('inicial_route', __name__)
 
@@ -10,3 +11,5 @@ def inicial():
     nome = session.get('nome')
     perfil = session.get('perfil')  
     return render_template('inicial.html', nome=nome, perfil=perfil)
+
+

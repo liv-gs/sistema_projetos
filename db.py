@@ -1,14 +1,13 @@
 import mysql.connector
-import bcrypt
+
 
 #conecção com o banco
-
 def conectar():
     return mysql.connector.connect(
         host='localhost',
         user='root',
         password='1401',
-        database='sistemas',
+        database='sistemas2',
         
     )
 
@@ -174,31 +173,46 @@ def salvar_execucao(nome, descricao, data_inicio, data_fim):
     conn.commit()  
     conn.close()
 
+
 def adicionar_projeto_a_execucao(execucao_id, projeto_id):
     conn = conectar()
     cursor = conn.cursor()
-    cursor.execute("""
-        UPDATE projetos
-        SET execucao_id = %s
-        WHERE id = %s
-    """, (execucao_id, projeto_id))
-    conn.commit()
-    conn.close()
+    cursor.execute('SELECT id FROM execucoes WHERE projeto_id = %s', (projeto_id,))
+    resultado = cursor.fetchone()
+
+    if resultado:
+        raise Exception("Projeto já está associado a outra execução.")
+    else:
+        cursor.execute('UPDATE execucoes SET projeto_id = %s WHERE id = %s', (projeto_id, execucao_id))
+        conn.commit()
+
 
 
 def buscar_projetos_por_execucao(execucao_id):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT id, nome, descricao
-        FROM projetos
-        WHERE execucao_id = %s
-    """, (execucao_id,))
+    
+    query = """
+    SELECT p.*
+    FROM projetos p
+    JOIN execucoes e ON e.projeto_id = p.id
+    WHERE e.id = %s
+    """
+    
+    cursor.execute(query, (execucao_id,))
     projetos = cursor.fetchall()
+    cursor.close()
     conn.close()
     return projetos
 
 
+def excluir_execucao(execucao_id):
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM execucoes WHERE id = %s', (execucao_id,))
+    conn.commit()
+    conn.close()
+    
 
 
 
